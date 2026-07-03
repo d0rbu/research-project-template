@@ -1,23 +1,20 @@
 # Architecture
 
-This repository is a compact Python package template for research code.
+This repository is a compact, package-free template for research code.
 
-## Package
+## Scaffold
 
-`src/research_template/` contains reusable code.
+The base repository intentionally starts without an importable source package. Add one
+only when a research project has real reusable code.
 
 | Module | Purpose |
 |---|---|
-| `types.py` | Domain phantom types and refinement functions |
-| `experiment.py` | Validated experiment configuration primitives |
-| `metrics.py` | Metric helpers with array shape and dtype contracts |
-| `cli.py` | Minimal executable smoke-test CLI |
+| `tests/test_correctness_tools.py` | Executable examples for phantom types, runtime checks, array contracts, and property tests |
 
 ## Correctness Boundary
 
 Raw values should be refined near the boundary where they enter the system. Core code
-should receive domain types such as `Probability` and `PositiveCount`, not broad
-primitive values.
+should receive domain types such as `Probability`, not broad primitive values.
 
 Array-heavy code should use `jaxtyping` for shape and dtype expectations and ordinary
 runtime checks for semantic constraints such as non-negativity or finite values.

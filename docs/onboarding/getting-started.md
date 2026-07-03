@@ -15,6 +15,7 @@ command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ```bash
 uv sync
+uv run pre-commit install
 uv run pytest
 ```
 
@@ -24,6 +25,7 @@ uv run pytest
 uv run ruff check .
 uv run ty check
 uv run pytest
+uv run pre-commit run --all-files
 ```
 
 Use `uv add <package>` for runtime dependencies and `uv add --dev <package>` for

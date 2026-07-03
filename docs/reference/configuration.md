@@ -30,9 +30,32 @@ Run:
 uv run ruff check .
 ```
 
+## Pre-Commit
+
+`pre-commit` uses local hooks that invoke the locked `uv` environment.
+
+Install:
+
+```bash
+uv run pre-commit install
+```
+
+Run:
+
+```bash
+uv run pre-commit run --all-files
+```
+
+Configured hooks:
+
+- `uv lock --check`
+- `uv run ruff check .`
+- `uv run ty check`
+- `uv run pytest`
+
 ## Type Checking
 
-`ty` is configured for Python 3.13 and `src/` layout.
+`ty` is configured for Python 3.13.
 
 Run:
 
@@ -43,7 +66,8 @@ uv run ty check
 ## Testing
 
 `pytest` collects from `tests/`, runs with strict config and strict markers, and reports
-coverage for `research_template`.
+coverage for the scaffold tests. When the project adds real source modules, update
+`tool.coverage.run.source` and the `--cov` target.
 
 Run:
 

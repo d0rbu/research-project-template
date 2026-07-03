@@ -14,8 +14,8 @@ fractions.
 
 ## 3. Build Small Reusable Units
 
-Keep reusable logic in `src/research_template/`. Keep one-off orchestration in scripts
-or notebooks that call package code.
+Keep reusable logic in a real module once the project has source code. Keep one-off
+orchestration in scripts or notebooks that call reusable code.
 
 ## 4. Test Invariants
 

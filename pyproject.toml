@@ -13,23 +13,13 @@ dependencies = [
     "phantom-types[hypothesis]>=3.0.0",
 ]
 
-[project.scripts]
-research-template = "research_template.cli:main"
-
-[build-system]
-requires = ["setuptools>=80.0.0"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["research_template*"]
-
-[tool.setuptools.package-data]
-research_template = ["py.typed"]
+[tool.uv]
+package = false
 
 [dependency-groups]
 dev = [
     "hypothesis>=6.0.0",
+    "pre-commit>=4.6.0",
     "pytest>=9.0.0",
     "pytest-cov>=7.0.0",
     "ruff>=0.15.0",
@@ -42,7 +32,7 @@ addopts = [
     "-ra",
     "--strict-config",
     "--strict-markers",
-    "--cov=research_template",
+    "--cov=tests",
     "--cov-report=term-missing",
 ]
 markers = [
@@ -52,7 +42,7 @@ markers = [
 
 [tool.coverage.run]
 branch = true
-source = ["research_template"]
+source = ["tests"]
 
 [tool.coverage.report]
 show_missing = true
@@ -69,7 +59,6 @@ exclude_lines = [
 
 [tool.ty.environment]
 python-version = "3.13"
-root = ["./src"]
 
 [tool.ty.src]
 exclude = [".venv/", "docs/", "dist/", "build/"]
@@ -96,4 +85,4 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["research_template"]
+known-first-party = ["tests"]

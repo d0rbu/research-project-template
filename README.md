@@ -13,9 +13,8 @@ use as the source of truth.
 git clone https://github.com/d0rbu/research-project-template.git
 cd research-project-template
 uv sync
-uv run ruff check .
-uv run ty check
-uv run pytest
+uv run pre-commit install
+uv run pre-commit run --all-files
 ```
 
 ## What this includes
@@ -23,6 +22,7 @@ uv run pytest
 | Area | Tooling |
 |---|---|
 | Package management | `uv`, `pyproject.toml`, `uv.lock` |
+| Local commit checks | `pre-commit` |
 | Linting | `ruff` |
 | Type checking | `ty` |
 | Tests | `pytest`, `pytest-cov`, `hypothesis` |
@@ -33,10 +33,9 @@ uv run pytest
 ## Repo layout
 
 ```
-src/research_template/  package code
-tests/                  pytest suite, including property tests
-docs/                   project documentation
-.github/workflows/      CI checks
+tests/              pytest suite, including property tests
+docs/               project documentation
+.github/workflows/  CI checks
 ```
 
 ## Where to go next

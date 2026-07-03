@@ -8,12 +8,11 @@ Use `phantom-types` when a primitive type is too broad for a domain concept.
 
 Examples in this repo:
 
-- `Probability`: `float` in `[0, 1]`
-- `PositiveCount`: `int` greater than `0`
+- `Probability`: `float` in `[0, 1]`, demonstrated in `tests/test_correctness_tools.py`
 
 Pattern:
 
-1. Define the phantom type in `src/research_template/types.py`.
+1. Define the phantom type near the code that owns the domain concept.
 2. Add a `parse_*` function that refines raw values.
 3. Store only refined values in dataclasses and core APIs.
 4. Use `st.from_type(YourType)` in property tests when a strategy exists.

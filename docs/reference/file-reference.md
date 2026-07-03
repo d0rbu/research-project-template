@@ -9,27 +9,16 @@
 | `CLAUDE.md` | Claude-specific pointer to agent conventions |
 | `pyproject.toml` | Package metadata and tool configuration |
 | `uv.lock` | Locked dependency graph |
+| `.pre-commit-config.yaml` | Local commit hooks for lockfile, lint, type, and test checks |
 | `.python-version` | Python version for local tooling |
 | `.gitignore` | Local artifacts excluded from git |
 | `LICENSE` | MIT license |
-
-## Package
-
-| File | Purpose |
-|---|---|
-| `src/research_template/__init__.py` | Public package exports |
-| `src/research_template/types.py` | `Probability`, `PositiveCount`, and parse/refinement helpers |
-| `src/research_template/experiment.py` | `ExperimentConfig` and split helper |
-| `src/research_template/metrics.py` | Weight normalization and weighted mean helpers |
-| `src/research_template/cli.py` | Minimal installed CLI entry point |
-| `src/research_template/py.typed` | Marks the package as typed |
 
 ## Tests
 
 | File | Purpose |
 |---|---|
-| `tests/test_types.py` | Phantom type and config refinement tests |
-| `tests/test_metrics.py` | Metric invariant and property tests |
+| `tests/test_correctness_tools.py` | Phantom type, runtime check, array contract, and property-test examples |
 
 ## Docs
 

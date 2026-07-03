@@ -20,16 +20,16 @@ project knowledge. If you want to add detail here, usually update the linked doc
 ## Repo layout
 
 ```
-src/research_template/  package code
-tests/                  pytest suite, including property tests
-docs/                   source-of-truth documentation
-.github/workflows/      CI checks
+tests/              pytest suite, including property tests
+docs/               source-of-truth documentation
+.github/workflows/  CI checks
 ```
 
 ## Conventions
 
 - Use `uv sync` to install and `uv run ...` to invoke project tools.
-- Run `uv run ruff check .`, `uv run ty check`, and `uv run pytest` before handoff.
+- Run `uv run pre-commit run --all-files` before handoff.
+- The pre-commit hooks enforce `uv lock --check`, `ruff`, `ty`, and `pytest`.
 - Prefer making bad state unrepresentable over documenting invalid states after the fact.
 - Use `phantom-types` for domain invariants that narrow primitive values.
 - Use `beartype` at runtime boundaries where invalid values can enter the system.
@@ -40,10 +40,9 @@ docs/                   source-of-truth documentation
 
 ## Correctness tools
 
-The example package includes:
+The scaffold tests demonstrate:
 
 - `Probability`: a phantom type for closed-range probabilities.
-- `PositiveCount`: a phantom type for strictly positive counts.
 - `normalize_weights`: a `jaxtyping` + `beartype` checked NumPy function.
 - property tests that use `st.from_type(...)` with phantom types.
 
@@ -53,10 +52,9 @@ sample counts, model dimensions, or validated artifact paths.
 ## Testing
 
 ```bash
-uv run ruff check .
-uv run ty check
-uv run pytest
+uv run pre-commit run --all-files
 ```
 
-`pytest` is configured to collect from `tests/` and require 95% coverage on
-`research_template`.
+`pytest` is configured to collect from `tests/` and require 95% coverage on the
+current scaffold tests. Update coverage `source` when the project grows real source
+modules.
