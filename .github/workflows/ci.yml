@@ -1,25 +1,33 @@
 name: CI
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: "0.8.22"
           enable-cache: true
       - name: Install Python
-        run: uv python install 3.13
+        run: uv python install
       - name: Install dependencies
         run: uv sync --locked
-      - name: Ruff
-        run: uv run ruff check .
-      - name: Ty
-        run: uv run ty check
-      - name: Pytest
-        run: uv run pytest
+      - name: Run all checks
+        run: uv run --locked pre-commit run --all-files --show-diff-on-failure
