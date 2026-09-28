@@ -15,26 +15,37 @@ dependencies = [
 
 [tool.uv]
 package = false
+required-version = ">=0.8.22"
 
 [dependency-groups]
 dev = [
+    "actionlint-py>=1.7.12.25",
     "hypothesis>=6.0.0",
+    "markdown-it-py>=4.2.0",
     "pre-commit>=4.6.0",
+    "pre-commit-hooks>=6.0.0",
     "pytest>=9.0.0",
     "pytest-cov>=7.0.0",
     "ruff>=0.15.0",
+    "rust-just>=1.58.0",
     "ty>=0.0.56",
+    "vulture>=2.16",
 ]
 
 [tool.pytest.ini_options]
+minversion = "9.0"
 testpaths = ["tests"]
 addopts = [
     "-ra",
     "--strict-config",
     "--strict-markers",
-    "--cov=tests",
+    "--import-mode=importlib",
+    "-m", "not slow",
+    "--cov",
     "--cov-report=term-missing",
 ]
+filterwarnings = ["error"]
+xfail_strict = true
 markers = [
     "property: property-based tests powered by Hypothesis",
     "slow: tests that are useful but too expensive for the default suite",
@@ -42,26 +53,24 @@ markers = [
 
 [tool.coverage.run]
 branch = true
-source = ["tests"]
+# Repository tools plus scaffold examples; add the research package when one exists.
+source = ["scripts", "tests"]
 
 [tool.coverage.report]
 show_missing = true
 skip_empty = true
 fail_under = 95
-exclude_lines = [
-    "pragma: no cover",
-    "if __name__ == .__main__.",
-    "if TYPE_CHECKING:",
-]
-
-[tool.ty]
-# Type checker is `ty` from Astral. Run `uv run ty check`.
+precision = 2
+exclude_also = ["if TYPE_CHECKING:"]
 
 [tool.ty.environment]
 python-version = "3.13"
 
 [tool.ty.src]
 exclude = [".venv/", "docs/", "dist/", "build/"]
+
+[tool.ty.rules]
+all = "error"
 
 [tool.ruff]
 line-length = 100
@@ -79,10 +88,22 @@ select = [
     "C4",  # flake8-comprehensions
     "SIM", # flake8-simplify
     "RET", # flake8-return
+    "ANN", # flake8-annotations
+    "PT",  # flake8-pytest-style
+    "RUF", # Ruff-specific correctness checks
 ]
 ignore = [
     "E501", # line too long; formatting and prose readability own this
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["tests"]
+known-first-party = ["scripts", "tests"]
+
+[tool.vulture]
+paths = ["."]
+min_confidence = 60
+sort_by_size = true
+exclude = [
+    ".venv/", ".git/", ".cache/", ".codex/worktrees/", "build/", "dist/", "data/", "artifacts/",
+    "checkpoints/", "out/", "outputs/", "logs/", "runs/", "wandb/",
+]

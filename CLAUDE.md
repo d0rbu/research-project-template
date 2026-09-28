@@ -15,7 +15,7 @@ this repository.
 ## Required checks
 
 ```bash
-uv run pre-commit run --all-files
+uv run --locked pre-commit run --all-files
 ```
 
 If a check cannot be run, say exactly why and what remains unverified.
